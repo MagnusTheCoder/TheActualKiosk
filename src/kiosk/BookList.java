@@ -71,7 +71,7 @@ public class BookList
     /**
      * Sends all current publications to printer of the class Printer.
      */
-    public void viewAllPublications() {
+    public void viewAllBooks() {
         // int totalBooks = 0;
         this.bookList.values().stream().forEach((Book book) -> {
             ApplicationUI applicationUI = new ApplicationUI();
@@ -81,12 +81,13 @@ public class BookList
             String publishDate = book.getPublishDate();
             String edition = book.getEdition();
             String seriesTitle = book.getSeriesTitle();
+            String cost = book.getPrice();
             int numberOfBooksInSeries = booksInSeries(seriesTitle) - 1;
             boolean isStandAlone = book.isStandAlone();
             if (isStandAlone == true) {
-                applicationUI.printStandAlone(bookTitle, author, bookPublisher, publishDate, edition);
+                applicationUI.printStandAlone(bookTitle, author, bookPublisher, publishDate, edition, cost);
             } else {
-                applicationUI.printSeries(bookTitle, author, bookPublisher, publishDate, seriesTitle, numberOfBooksInSeries);
+                applicationUI.printSeries(bookTitle, author, bookPublisher, publishDate, seriesTitle, numberOfBooksInSeries, cost);
             }
             //totalBooks++;
         });
@@ -247,6 +248,7 @@ public class BookList
      *
      * @param publisher Is the first searchword for the searchengine.
      * @param title Is the second searchword for the searchengine.
+     * @return a book if publisher and title matches searchword
      */
     public HashMap<String, Book> searchByPublisherAndTitle(String publisher, String title)
     {

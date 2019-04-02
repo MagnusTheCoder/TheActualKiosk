@@ -19,7 +19,7 @@ public class Book extends Publication
     private String author;
 //    private String publisher;
 //    private String publishDate; //dd.MM.YY
-    private int edition;
+   
     private String seriesTitle;
     private int numberOfBooksInSeries;
     private boolean standAlone;
@@ -27,16 +27,16 @@ public class Book extends Publication
     /**
      * Constructor for objects of class Book who is standalone.
      *
-     * @param bookTitle is the title of the book.
+     * @param title is the title of the book.
      * @param author is the author of the book.
      * @param publisher is the publisher of the book.
      * @param publishDate is the publishdate of the book (dd.MM.YY).
      * @param edition is the edition of the book.
      */
-    public Book(String caption, String author, String publisher,
-               String publishDate , int edition)
+    public Book(String title, String author, String publisher,
+               String publishDate , int edition, String price)
     {
-        super(caption, publisher, publishDate, edition);
+        super(title, publisher, publishDate, edition, price);
 //        if (bookTitle != null ) {
 //            this.bookTitle = bookTitle;
 //        }
@@ -62,13 +62,10 @@ public class Book extends Publication
      * @param numberOfBooksInSeries is the amount of books in the series.
      */
     public Book(String caption, String author, String publisher,
-                 String seriesTitle, int numberOfBooksInSeries,String publishDate, int edition)
+                 String seriesTitle, int numberOfBooksInSeries,String publishDate, int edition, String price)
     {
- super(caption, publisher, publishDate, edition);
- //this.bookTitle = bookTitle;
+ super(caption, publisher, publishDate, edition, price);
         this.author = author;
-//        this.publisher = publisher;
-//        this.publishDate = publishDate;
         this.seriesTitle = seriesTitle;
         this.numberOfBooksInSeries = numberOfBooksInSeries;
         this.standAlone = false;
@@ -148,12 +145,12 @@ public class Book extends Publication
         this.numberOfBooksInSeries++;
     }
     
-     /**
-     * Returns the edition of the book.
-     * @return The edition of the book.
-     */
-    public String getEdition() {
-        String edition = this.edition + ". Edition";
-        return edition;
-    }
+//     /**
+//     * Returns the edition of the book.
+//     * @return The edition of the book.
+//     */
+//    public String getEdition() {
+//        String edition = this.edition + ". Edition";
+//        return edition;
+//    }
 }

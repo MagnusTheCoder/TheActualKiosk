@@ -15,7 +15,11 @@ import java.util.HashMap;
 public class JournalList 
 {
     private int total;
+    private int totalNewsPaper;
+    private int totalMagazines;
     private HashMap<String, Journal> journalList;
+    private HashMap<String, Magazines> magazineList;
+    private HashMap<String, NewsPaper> newsPaperList;
     private int numberOfJournals;
 
     /**
@@ -24,19 +28,44 @@ public class JournalList
 public JournalList()
 {
     this.numberOfJournals = 0;
-    journalList = new HashMap<>();    
+    journalList = new HashMap<>();   
+//    magazineList = new HashMap<>();
+//    newsPaperList = new HashMap<>();
+}
+
+
+/**
+ * 
+ * @param headline
+ * @param magazines 
+ */
+public void addMagazine(String headline, Journal journal)
+{
+    this.journalList.put(headline, journal);
+    totalMagazines++;
 }
 /**
- * Add a journal to HashMap journalList
- * @param header of journal
- * @param journal of type journal
+ * 
+ * @param headline
+ * @param newsPaper 
  */
-public void addJournal(String header, Journal journal)
+public void addNewsPaper(String headline, Journal journal)
 {
-    this.journalList.put(header, journal);
-    updateNumberOfJournals();
-    
+    this.journalList.put(headline, journal);
+    totalNewsPaper++;
 }
+///**
+// * Add a journal to HashMap journalList
+// * @param header of journal
+// * @param journal of type journal
+// */
+//public void addJournal(String header, Journal journal)
+//{
+//    this.journalList.put(header, journal);
+//    updateNumberOfJournals();
+//    
+//}
+
 
 public void removeJournal(String headline)
 {
@@ -50,6 +79,22 @@ public void removeJournal(String headline)
         }
     }
 }
+
+
+public HashMap<String, Journal> searchByPublisherAndTitle(String publisher, String headLine)
+    {
+        HashMap<String, Journal> journals = new HashMap<String, Journal>();
+        for (Journal journal : this.journalList.values())
+        {
+            if ((journal.getPublisher().toUpperCase().equals(publisher
+                    .toUpperCase())) && (journal.getCaption().toUpperCase()
+                    .equals(headLine.toUpperCase())))
+            {
+                journals.put(journal.getCaption(), journal);              
+            }
+        }
+        return journals;
+    }
 
     /**
      * Checks is the hashmap journallist contains a given value
@@ -77,24 +122,27 @@ private void updateNumberOfJournals()
  */
 public void viewAllJournals()
 {
-  this.journalList.values().stream().forEach((journal)->
+  this.journalList.values().stream().forEach((Journal)->
   {
       ApplicationUI applicationUI = new ApplicationUI();
       
-      String header = journal.getCaption();
-      String publisher = journal.getPublisher();
-      String publishDate = journal.getPublishDate();
-      journalExistance(header);
-      String edition = journal.getEdition();
-      
-       applicationUI.printJournall(journal);
+      String header = Journal.getCaption();
+      String publisher = Journal.getPublisher();
+      String publishDate = Journal.getPublishDate();
+      String edition = Journal.getEdition();
+      String journalType = Journal.getType();
+      String price = Journal.getPrice();
+       applicationUI.printJournal(header, publisher, publishDate, edition, journalType, price);
     });
-}
 
-public int totalJournals()
+}
+public int totalJournal()
 {
-    total = JournalList.this.journalList.size();
-    return total;
+    return journalList.size();
+}
+public void totalJournals()
+{
+    System.out.println("                     "+"Magazines: "+totalMagazines+"\n"+"                     "+"Newspapers: "+totalNewsPaper);
 }
  /**
   * 
@@ -131,11 +179,26 @@ public int totalJournals()
         return journals;
 }
     
-//    public void addEdition()
-//    {
-//        
-//    }
     
+ /**
+     * Checks the amount of books in a series
+     * @param title Is the title of the series to be checked
+     * @return Returns the number of books in the series
+     */
+    public int journalEditions(String edition)
+    {
+        int editions = 1;
+        for(Journal journal : this.journalList.values())
+        {
+            String jPublisher = journal.getPublisher();
+            if(jPublisher.toUpperCase().equals(edition.toUpperCase()))
+            {
+                editions +=1;
+            }
+        }
+        return editions;
+    }
+
     public boolean isEmpty()
     {
         boolean empty = false;

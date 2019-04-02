@@ -29,18 +29,7 @@ public class ApplicationUI {
         "2. Journal menu",
         "3. Search for books or journals", 
         "4. Publications in store"
-    //            "1. List all books",
-    //            "2. Add new book",
-    //            "3. Remove a book",
-    //            "4. Find a book by publisher",
-    //            "5. Find a book by publisher and title",
-    //            "6. Add a new edition to a book",
-    //            "7. Convert a book to a series",
-    //            "8. Add new journal",
-    //            "9. List all journals",
-    //            "10. Remove a journal",
-    //            "11. Find a journal by publisher",
-    //            "12. List all publications",
+ 
     };
     
     /**
@@ -51,8 +40,6 @@ public class ApplicationUI {
                 "1. List all books",
                 "2. Add new book",
                 "3. Remove a book",
-                //                "4. Find a book by publisher",
-                //                "5. Find a book by publisher and title",
                 "4. Add a new edition to a book",
                 "5. Convert a book to a series",
                 "6. Main menu",
@@ -147,6 +134,9 @@ public class ApplicationUI {
         return quit;
     }
 
+    /**
+     *
+     */
     public void journalStart() {
       
 
@@ -199,6 +189,9 @@ public class ApplicationUI {
         }
     }
 
+    /**
+     *
+     */
     public void bookStart() {
 
         while (!quit) {
@@ -336,7 +329,7 @@ public class ApplicationUI {
     void listAllBooks() {
         System.out.println("Books: ");
         System.out.println("___________________________");
-        bookList.viewAllPublications();
+        bookList.viewAllBooks();
         if (bookList.isEmpty()) {
             System.out.println("There are no books in the register \n");
         } else {
@@ -352,9 +345,7 @@ public class ApplicationUI {
         System.out.println("Journals: ");
         System.out.println("___________________________");
         journalList.viewAllJournals();
-        //System.out.println("yes we made it to here");
-        //journalList.addMagazine(inputLine, null);
-//        journalList.viewAllJournals();
+      
         if (journalList.isEmpty()) {
             System.out.println("There are no journals in the register");
         } else {
@@ -410,7 +401,6 @@ public class ApplicationUI {
  * Add a new product/journal to the register. 
  */
     void addNewJournal() {
-        int edition = 1;
         boolean search = false;
         while(search != true)
         {
@@ -427,7 +417,9 @@ public class ApplicationUI {
         String journalPublishDate = getCommand();
         System.out.println("Price of newspaper: ");
         String price = getCommand();
-        System.out.print("Edition: \n");
+        System.out.println();
+        int edition = journalList.journalEditions(journalPublisher);
+       // System.out.print("Edition: \n");
         journal = new NewsPaper(journalHeader, journalPublisher, journalPublishDate, edition, journalType, price);
         journalList.addNewsPaper(journalHeader, journal);
         search = true;
@@ -442,7 +434,10 @@ public class ApplicationUI {
         String journalPublishDate = getCommand();
         System.out.println("What is the monthly subscription fee?");
         String subscriptionFee = getCommand();
-        System.out.print("Edition: \n");
+        System.out.println();
+
+       // System.out.print("Edition: \n");
+        int edition = journalList.journalEditions(journalPublisher);
         journal = new Magazines(journalHeader, journalPublisher, journalPublishDate, edition, journalType, subscriptionFee);
         journalList.addMagazine(journalHeader, journal);
         search = true;
@@ -454,11 +449,6 @@ public class ApplicationUI {
         }
     }
        
-//            System.out.println("Is the book a part of a series? - Type true if correct, else type false");
-//            String standAlone = getCommand();
-//            if (standAlone.equals("true")) {
-//                System.out.println("The title of the series: ");
-//                String seriesTitle = getCommand();
 
     }
 
@@ -468,15 +458,12 @@ public class ApplicationUI {
      * @param bookTitle The title of the book.
      * @param book The book value.
      */
-    private void addBook(String bookTitle, Book book) {
+     void addBook(String bookTitle, Book book) {
         bookList.addBook(bookTitle, book);
         System.out.println("The book has been added.");
     }
 
-//    private void addMagazine(String header, Journal journal) {
-//        journalList.addJournal(header, journal);
-//        System.out.println("Journal has been added");
-//    }
+
 
     /**
      * Removes a book from the register, using the title of the book.
@@ -511,15 +498,16 @@ public class ApplicationUI {
      *
      * @param book
      */
-    private void printBookInformation(Book book) {
+     void printBookInformation(Book book) {
         if (book.isStandAlone() == false) {
             System.out.println("Seriestitle:" + book.getSeriesTitle());
         }
-        System.out.println("Price: "+ book.getPrice());
+        System.out.println("\nPrice: "+ book.getPrice());
         System.out.println("Booktitle:" + book.getCaption());
         System.out.println("Author:" + book.getAuthor());
         System.out.println("Publisher:" + book.getPublisher());
         System.out.println("Publishdate:" + book.getPublishDate());
+        System.out.println("price: " + book.getPrice());
         if (book.isStandAlone() == false) {
             System.out.println("Books in series:" + book.getNumberOfBooksInSeries());
         } else {
@@ -533,11 +521,22 @@ public class ApplicationUI {
  * @param publishDate
  * @param edition
  * @param journalType 
+     * @param price 
  */
-     public void printJournal(String header, String publisher, String publishDate, String edition, String journalType, String price)
+     void printJournalInfo(Journal journal)
+    {
+       System.out.println("\nType: " + journal.getType());
+        System.out.println("Price: " + journal.getPrice());
+         System.out.println ("Header: " + journal.getCaption());
+        System.out.println ("Publisher: " + journal.getPublisher());
+        System.out.println ("PublishDate: " + journal.getPublishDate());
+        System.out.println ("Edition: " + journal.getEdition());
+        System.out.println();
+    }
+      void printJournal(String header, String publisher, String publishDate, String edition, String journalType, String price)
     {
         System.out.println("Type: " + journalType);
-        System.err.println("Price: " + price);
+        System.out.println("Price: " + price);
          System.out.println ("Header: " + header);
         System.out.println ("Publisher: " + publisher);
         System.out.println ("PublishDate: " + publishDate);
@@ -545,29 +544,7 @@ public class ApplicationUI {
         System.out.println();
                
     }
-     
-//     public void getPrice()
-//     {
-//         String headline = getCommand();
-//         if(journalList.containValue(headline))       
-//         {
-//           System.out.println(+" Kroner");
-//         }         
-//         
-//     }
-     
-    /**
-     * 
-     * @param journalList 
-     */
-    public void printJournall(JournalList journalList) {
-        journalList.viewAllJournals();
-//        System.out.println("Header: " + );
-//        System.out.println("Publisher: " + journal.getPublisher());
-//        System.out.println("PublishDate: " + journal.getPublishDate());
-//        System.out.println("Edition: " + journal.getEdition());
-//        System.out.println();
-    }
+ 
 
     /**
      *
@@ -602,7 +579,7 @@ public class ApplicationUI {
                     System.out.println("Found no journals by this publisher.\n");
                 } else {
                     journals.values().stream().map((journal) -> {
-                        printJournall(journalList);
+                         printJournalInfo(journal);
                         return journal;
                     }).forEach((_item) -> {
                         System.out.println();
@@ -619,59 +596,6 @@ public class ApplicationUI {
                     }
         }
     }
-//    /**
-//     * Finds and displays the books with a given publisher.
-//     * As with the addNewProduct()-method, you have to
-//     * ask the user for the string (name/title/publisher)
-//     * to search for, and then use this string as input-
-//     * parameter to the method in the register-object.
-//     * Then, upon return from the register, you need
-//     * to print the details of the found item.
-//     */
-//    void findBookByPublisher()
-//    {
-//        
-//        System.out.println("Publisher of the book: ");
-//        String bookPublisher = getCommand();
-//        HashMap<String, Book> books = bookList.searchByPublisher(bookPublisher);
-//        if (books.isEmpty()) {
-//            System.out.println("Found no books with this title");
-//        }
-//        else {
-//            for (Book book : books.values()) {
-//                printBookInformation(book);
-//                System.out.println();
-//            }
-//            System.out.println("All books of the requested publisher has been delivered");
-//        }
-//    }
-//    /**
-//     * Finds and display all journals by searched publisher
-//     * Asks the user for a publisher
-//     * Then checks if searched publisher is listed 
-//     * if true then prints out all journals by publisher
-//     * if false prints out no results
-//     */
-//void findJournalByPublisher()
-//{
-//    System.out.println("Publisher of the journal: ");
-//    String journalPublisher = getCommand();
-//    HashMap<String, Journal> journals = journalList.searchByPublisher(journalPublisher);
-//    if(journals.isEmpty())
-//    {
-//        System.out.println("Found no journals by this publisher.");
-//    }
-//        else
-//        {
-//                for(Journal journal : journals.values())
-//                {
-//                    printJournall(journal);
-//                    System.out.println();
-//                }
-//                System.out.println("All journals of the requested publisher has been delivered");
-//                
-//    }
-//}
 
     /**
      * Finds and displays the books with a given publisher and booktitle.
@@ -715,7 +639,7 @@ public class ApplicationUI {
         }
          else {
             journals.values().stream().map((journal) -> {
-                printJournall(journalList);
+                 journalList.viewAllJournals();
                return journal;
             }).forEach((_item) -> {
                 System.out.println();
@@ -775,13 +699,14 @@ public class ApplicationUI {
      * @param publishDate Is the publishdate of the book (dd.MM.YY).
      * @param edition Is the edition of the book.
      */
-    public void printStandAlone(String bookTitle, String author,
-            String bookPublisher, String publishDate, String edition) {
+     void printStandAlone(String bookTitle, String author,
+            String bookPublisher, String publishDate, String edition, String price) {
         System.out.println("Booktitle: " + bookTitle);
         System.out.println("Author: " + author);
         System.out.println("Publisher: " + bookPublisher);
         System.out.println("Publishdate: " + publishDate);
         System.out.println("Edition: " + edition);
+        System.out.println("Price: " + price);
         System.out.println();
     }
 
@@ -795,20 +720,22 @@ public class ApplicationUI {
      * @param seriesTitle Is the title of the books series.
      * @param numberOfBooksInSeries Is the amount of books in the series.
      */
-    public void printSeries(String bookTitle, String author,
+     void printSeries(String bookTitle, String author,
             String bookPublisher, String publishDate,
-            String seriesTitle, int numberOfBooksInSeries) {
+            String seriesTitle, int numberOfBooksInSeries, String price) {
         System.out.println("Seriestitle: " + seriesTitle);
         System.out.println("Booktitle: " + bookTitle);
         System.out.println("Author: " + author);
         System.out.println("Publisher: " + bookPublisher);
         System.out.println("Publishdate: " + publishDate);
+        System.out.println("Price: " + price);
         System.out.println("Books in series: " + numberOfBooksInSeries);
         System.out.println();
     }
 
    
-    public void removeJournal() {
+     void removeJournal() 
+    {
         System.out.println("Header of the journal");
         String journalHeader = getCommand();
         System.out.println("Publisher of journal");
@@ -816,29 +743,45 @@ public class ApplicationUI {
         if (journalList.containValue(journalHeader) ) {
             journalList.removeJournal(journalHeader);
             System.out.println("The journal has been removed.\n");
-        } else {
+        } 
+        else 
+        {
             System.out.println("The journal was not found.\n");
         }
     }
 
-    public void totalPublication() {
+     void totalPublication() 
+    {
+        boolean found = false;
+        while(found !=true)
+        {
         int totalPublications;
         totalPublications = bookList.totalPublications() + journalList.totalJournal();
-        if (totalPublications >= 1) {
+        if (totalPublications >= 1) 
+        {
             System.out.println("Total number of publications: " + totalPublications + "\n");
             System.out.println("Books: " + bookList.totalPublications());
             System.out.println("Journals: " + journalList.totalJournal());
         journalList.totalJournals();
         System.out.println("\n Do you want to see all details of the books and journals? // Type yes or no");
             String sure = getCommand();
-            if (sure.toUpperCase().contains("YES")) {
+            if (sure.toUpperCase().contains("YES")) 
+            {
                 listAllBooks();
                 listAllJournals();
-            } else {
-                System.out.println();
+                found = true;
+            } 
+            else 
+            {
+                System.out.println("Didn`t recognize input, type either yes to get info of availble publication or else type no to return to menu. \n"
+                        + "Valid inputs \\ *yes* && *no* ");
             }
-        } else {
+        } 
+        else 
+        {
             System.out.println("There are currently no publications in store. Try again another time.\n");
+            found = true;
         }
+    }
     }
 }

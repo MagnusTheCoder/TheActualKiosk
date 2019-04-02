@@ -15,27 +15,36 @@ private String publisher;
 private String caption;
 private String publishDate; //dd.MM.YY
 private  int edition;
-Calendar PublicationCal = Calendar.getInstance();
+private String price;
+//Calendar PublicationCal = Calendar.getInstance();
 
-    public Publication(String caption, String publisher,String publishDate, int edition) 
+    public Publication(String caption, String publisher,String publishDate, int edition, String price) 
     {
-         if (caption != null ) {
+         if (caption != null ) 
+         {
             this.caption = caption;
         }
-        else {
+        else 
+         {
             this.caption = "INVALID VALUE";
         }
         this.publisher = publisher;
         this.publishDate = publishDate;
-//        this.woy = woy;
-//        this.dow = dow;
-//        this.wy = wy;
         this.edition = edition;
+        this.price = price;
     }
-
+/**
+ * Returns the price of publication
+ * @return the price of publication
+ */
+    public String getPrice()
+    {
+        return this.price;
+    }
+    
     /**
-     * Returns the publisher of the book.
-     * @return The publisher of the book.
+     * Returns the publisher of the publication.
+     * @return The publisher of the publication.
      */
     public String getPublisher() 
     {
@@ -43,8 +52,8 @@ Calendar PublicationCal = Calendar.getInstance();
     }
 
     /**
-     * Return the header of the journal
-     * @return header of the journal
+     * Return the header of the publication
+     * @return header of the publication
      */
     public String getCaption()
     {
@@ -53,8 +62,8 @@ Calendar PublicationCal = Calendar.getInstance();
 
     
     /**
-     * Returns the publishdate of the book.
-     * @return The publishdate of the book.
+     * Returns the publishdate of the publication.
+     * @return The publishdate of the publication.
      */
     public String getPublishDate() 
     {
@@ -62,8 +71,8 @@ Calendar PublicationCal = Calendar.getInstance();
     }
     
     /**
-     * Returns the edition of the book.
-     * @return The edition of the book.
+     * Returns the edition of the publication.
+     * @return The edition of the publication.
      */
     public String getEdition() {
         String edition = this.edition + ". Edition";

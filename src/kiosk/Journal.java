@@ -13,33 +13,25 @@ package kiosk;
  */
 public class Journal extends Publication
 {
-    //Represents journal headline
-    private String header;
-    //Check if journal is newspaper
-    private boolean newsPaper;
+    private String type;
 
     /**
      * Constructor for objects of class Journal 
      * 
-     * @param header
-     * @param publisher
-     * @param publishDate 
+     * @param caption of the journal
+     * @param publisher of the journal
+     * @param edition of the journal
+     * @param publishDate of the journal
      */
-    public Journal (String caption, String publisher, String publishDate, int edition)
+    public Journal (String caption, String publisher, String publishDate, int edition,  String type, String price)
     {
-        super(caption, publisher, publishDate, edition);
-          
+        super(caption, publisher, publishDate, edition, price); 
+                this.type = type;
+
+    }
+    public String getType()
+    {
+        return this.type;
     }
     
-    
-        
-//    /**
-//     * Return the header of the journal
-//     * @return header of the journal
-//     */
-//    public String getCaption()
-//    {
-//        return this.caption;
-//    }
-
 }
